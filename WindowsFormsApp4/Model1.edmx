@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBENTİTYURUNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GIRIS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KULLANICIADI" Type="varchar" MaxLength="50" />
+          <Property Name="SIFRE" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MARKA">
+          <Key>
+            <PropertyRef Name="MARKAID" />
+          </Key>
+          <Property Name="MARKAID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MARKAAD" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TBLKATEGORI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KATEGORIAD" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TBLSATIS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="URUNAD" Type="int" />
+          <Property Name="FIYAT" Type="int" />
+          <Property Name="KATEGORİ" Type="int" />
+          <Property Name="MARKA" Type="int" />
+        </EntityType>
+        <EntityType Name="TBLURUN">
+          <Key>
+            <PropertyRef Name="URUNID" />
+          </Key>
+          <Property Name="URUNID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="URUNAD" Type="varchar" MaxLength="30" />
+          <Property Name="URUNKATEGORİ" Type="int" />
+          <Property Name="URUNMARKA" Type="int" />
+          <Property Name="DURUM" Type="bit" />
+          <Property Name="FIYAT" Type="int" />
+        </EntityType>
+        <Association Name="FK_TBLSATIS_MARKA">
+          <End Role="MARKA" Type="Self.MARKA" Multiplicity="0..1" />
+          <End Role="TBLSATIS" Type="Self.TBLSATIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARKA">
+              <PropertyRef Name="MARKAID" />
+            </Principal>
+            <Dependent Role="TBLSATIS">
+              <PropertyRef Name="MARKA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLSATIS_TBLKATEGORI">
+          <End Role="TBLKATEGORI" Type="Self.TBLKATEGORI" Multiplicity="0..1" />
+          <End Role="TBLSATIS" Type="Self.TBLSATIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLKATEGORI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBLSATIS">
+              <PropertyRef Name="KATEGORİ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLURUN_MARKA">
+          <End Role="MARKA" Type="Self.MARKA" Multiplicity="0..1" />
+          <End Role="TBLURUN" Type="Self.TBLURUN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARKA">
+              <PropertyRef Name="MARKAID" />
+            </Principal>
+            <Dependent Role="TBLURUN">
+              <PropertyRef Name="URUNMARKA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLURUN_TBLKATEGORI">
+          <End Role="TBLKATEGORI" Type="Self.TBLKATEGORI" Multiplicity="0..1" />
+          <End Role="TBLURUN" Type="Self.TBLURUN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLKATEGORI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBLURUN">
+              <PropertyRef Name="URUNKATEGORİ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="MARKAGETIR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="DBENTİTYURUNModelStoreContainer">
+          <EntitySet Name="GIRIS" EntityType="Self.GIRIS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARKA" EntityType="Self.MARKA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLKATEGORI" EntityType="Self.TBLKATEGORI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLSATIS" EntityType="Self.TBLSATIS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLURUN" EntityType="Self.TBLURUN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TBLSATIS_MARKA" Association="Self.FK_TBLSATIS_MARKA">
+            <End Role="MARKA" EntitySet="MARKA" />
+            <End Role="TBLSATIS" EntitySet="TBLSATIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLSATIS_TBLKATEGORI" Association="Self.FK_TBLSATIS_TBLKATEGORI">
+            <End Role="TBLKATEGORI" EntitySet="TBLKATEGORI" />
+            <End Role="TBLSATIS" EntitySet="TBLSATIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLURUN_MARKA" Association="Self.FK_TBLURUN_MARKA">
+            <End Role="MARKA" EntitySet="MARKA" />
+            <End Role="TBLURUN" EntitySet="TBLURUN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLURUN_TBLKATEGORI" Association="Self.FK_TBLURUN_TBLKATEGORI">
+            <End Role="TBLKATEGORI" EntitySet="TBLKATEGORI" />
+            <End Role="TBLURUN" EntitySet="TBLURUN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBENTİTYURUNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MARKA">
+          <Key>
+            <PropertyRef Name="MARKAID" />
+          </Key>
+          <Property Name="MARKAID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MARKAAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBLSATIS" Relationship="Self.FK_TBLSATIS_MARKA" FromRole="MARKA" ToRole="TBLSATIS" />
+          <NavigationProperty Name="TBLURUN" Relationship="Self.FK_TBLURUN_MARKA" FromRole="MARKA" ToRole="TBLURUN" />
+        </EntityType>
+        <EntityType Name="TBLKATEGORI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KATEGORIAD" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBLSATIS" Relationship="Self.FK_TBLSATIS_TBLKATEGORI" FromRole="TBLKATEGORI" ToRole="TBLSATIS" />
+          <NavigationProperty Name="TBLURUN" Relationship="Self.FK_TBLURUN_TBLKATEGORI" FromRole="TBLKATEGORI" ToRole="TBLURUN" />
+        </EntityType>
+        <EntityType Name="TBLSATIS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="URUNAD" Type="Int32" />
+          <Property Name="FIYAT" Type="Int32" />
+          <Property Name="KATEGORİ" Type="Int32" />
+          <Property Name="MARKA" Type="Int32" />
+          <NavigationProperty Name="MARKA1" Relationship="Self.FK_TBLSATIS_MARKA" FromRole="TBLSATIS" ToRole="MARKA" />
+          <NavigationProperty Name="TBLKATEGORI" Relationship="Self.FK_TBLSATIS_TBLKATEGORI" FromRole="TBLSATIS" ToRole="TBLKATEGORI" />
+        </EntityType>
+        <EntityType Name="TBLURUN">
+          <Key>
+            <PropertyRef Name="URUNID" />
+          </Key>
+          <Property Name="URUNID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="URUNAD" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="URUNKATEGORİ" Type="Int32" />
+          <Property Name="URUNMARKA" Type="Int32" />
+          <Property Name="DURUM" Type="Boolean" />
+          <NavigationProperty Name="MARKA" Relationship="Self.FK_TBLURUN_MARKA" FromRole="TBLURUN" ToRole="MARKA" />
+          <NavigationProperty Name="TBLKATEGORI" Relationship="Self.FK_TBLURUN_TBLKATEGORI" FromRole="TBLURUN" ToRole="TBLKATEGORI" />
+          <Property Name="FIYAT" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_TBLSATIS_MARKA">
+          <End Role="MARKA" Type="Self.MARKA" Multiplicity="0..1" />
+          <End Role="TBLSATIS" Type="Self.TBLSATIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARKA">
+              <PropertyRef Name="MARKAID" />
+            </Principal>
+            <Dependent Role="TBLSATIS">
+              <PropertyRef Name="MARKA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLURUN_MARKA">
+          <End Role="MARKA" Type="Self.MARKA" Multiplicity="0..1" />
+          <End Role="TBLURUN" Type="Self.TBLURUN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARKA">
+              <PropertyRef Name="MARKAID" />
+            </Principal>
+            <Dependent Role="TBLURUN">
+              <PropertyRef Name="URUNMARKA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLSATIS_TBLKATEGORI">
+          <End Role="TBLKATEGORI" Type="Self.TBLKATEGORI" Multiplicity="0..1" />
+          <End Role="TBLSATIS" Type="Self.TBLSATIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLKATEGORI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBLSATIS">
+              <PropertyRef Name="KATEGORİ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLURUN_TBLKATEGORI">
+          <End Role="TBLKATEGORI" Type="Self.TBLKATEGORI" Multiplicity="0..1" />
+          <End Role="TBLURUN" Type="Self.TBLURUN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLKATEGORI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBLURUN">
+              <PropertyRef Name="URUNKATEGORİ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBENTİTYURUNEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MARKA" EntityType="Self.MARKA" />
+          <EntitySet Name="TBLKATEGORI" EntityType="Self.TBLKATEGORI" />
+          <EntitySet Name="TBLSATIS" EntityType="Self.TBLSATIS" />
+          <EntitySet Name="TBLURUN" EntityType="Self.TBLURUN" />
+          <AssociationSet Name="FK_TBLSATIS_MARKA" Association="Self.FK_TBLSATIS_MARKA">
+            <End Role="MARKA" EntitySet="MARKA" />
+            <End Role="TBLSATIS" EntitySet="TBLSATIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLURUN_MARKA" Association="Self.FK_TBLURUN_MARKA">
+            <End Role="MARKA" EntitySet="MARKA" />
+            <End Role="TBLURUN" EntitySet="TBLURUN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLSATIS_TBLKATEGORI" Association="Self.FK_TBLSATIS_TBLKATEGORI">
+            <End Role="TBLKATEGORI" EntitySet="TBLKATEGORI" />
+            <End Role="TBLSATIS" EntitySet="TBLSATIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLURUN_TBLKATEGORI" Association="Self.FK_TBLURUN_TBLKATEGORI">
+            <End Role="TBLKATEGORI" EntitySet="TBLKATEGORI" />
+            <End Role="TBLURUN" EntitySet="TBLURUN" />
+          </AssociationSet>
+          <EntitySet Name="GIRIS" EntityType="DBENTİTYURUNModel.GIRIS" />
+          <FunctionImport Name="MARKAGETIR" ReturnType="Collection(String)" />
+        </EntityContainer>
+        <EntityType Name="GIRIS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KULLANICIADI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SIFRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBENTİTYURUNModelStoreContainer" CdmEntityContainer="DBENTİTYURUNEntities">
+          <EntitySetMapping Name="MARKA">
+            <EntityTypeMapping TypeName="DBENTİTYURUNModel.MARKA">
+              <MappingFragment StoreEntitySet="MARKA">
+                <ScalarProperty Name="MARKAID" ColumnName="MARKAID" />
+                <ScalarProperty Name="MARKAAD" ColumnName="MARKAAD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLKATEGORI">
+            <EntityTypeMapping TypeName="DBENTİTYURUNModel.TBLKATEGORI">
+              <MappingFragment StoreEntitySet="TBLKATEGORI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="KATEGORIAD" ColumnName="KATEGORIAD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLSATIS">
+            <EntityTypeMapping TypeName="DBENTİTYURUNModel.TBLSATIS">
+              <MappingFragment StoreEntitySet="TBLSATIS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="URUNAD" ColumnName="URUNAD" />
+                <ScalarProperty Name="FIYAT" ColumnName="FIYAT" />
+                <ScalarProperty Name="KATEGORİ" ColumnName="KATEGORİ" />
+                <ScalarProperty Name="MARKA" ColumnName="MARKA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLURUN">
+            <EntityTypeMapping TypeName="DBENTİTYURUNModel.TBLURUN">
+              <MappingFragment StoreEntitySet="TBLURUN">
+                <ScalarProperty Name="FIYAT" ColumnName="FIYAT" />
+                <ScalarProperty Name="URUNID" ColumnName="URUNID" />
+                <ScalarProperty Name="URUNAD" ColumnName="URUNAD" />
+                <ScalarProperty Name="URUNKATEGORİ" ColumnName="URUNKATEGORİ" />
+                <ScalarProperty Name="URUNMARKA" ColumnName="URUNMARKA" />
+                <ScalarProperty Name="DURUM" ColumnName="DURUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GIRIS">
+            <EntityTypeMapping TypeName="DBENTİTYURUNModel.GIRIS">
+              <MappingFragment StoreEntitySet="GIRIS">
+                <ScalarProperty Name="SIFRE" ColumnName="SIFRE" />
+                <ScalarProperty Name="KULLANICIADI" ColumnName="KULLANICIADI" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="MARKAGETIR" FunctionName="DBENTİTYURUNModel.Store.MARKAGETIR" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
